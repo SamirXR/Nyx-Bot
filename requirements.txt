@@ -1,0 +1,4 @@
+openai
+prodiapy==3.6
+aiohttp
+sdxl
