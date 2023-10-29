@@ -2,6 +2,8 @@
 
 Aritifical Intelligence Discord bot with Image Recognition/OCR Capabilities + Image Generation with SDXL
 
+If You don't wanna get into Complex Steps, Invite Mine : [Discord Bot](https://discord.com/oauth2/authorize?client_id=1168048632059150346&scope=bot&permissions=8)
+
 Join [Discord Server](https://discord.gg/P9gGZaXWGR) for any Assist/Issues 
 
 If You like My OpenSource Work you can Support : https://www.buymeacoffee.com/samir.xr
