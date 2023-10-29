@@ -10,6 +10,17 @@ If You like My OpenSource Work you can Support : https://www.buymeacoffee.com/sa
 
 This will be Solely used for Hosting of Bot/API and Future Improvements.
 
+
+# Features
+
+| Feature                  | Description                             |
+|--------------------------|-----------------------------------------|
+| Chat                     | Uses GPT-3 for natural language understanding and generation. |
+| Image Classification                    | Uses  LLaVA for Classification |
+| OCR (Optical Character Recognition) | Allows you to extract text from images and scanned documents. |
+| YouTube Summarization    | Summarizes YouTube videos to provide concise overviews. |
+| Internet Search    | Utilizes DuckDuckGO as a search engine for the content.  |
+
 # Prerequisites
 
 - A Replit Account : [Click here](https://replit.com/~)
@@ -18,6 +29,7 @@ This will be Solely used for Hosting of Bot/API and Future Improvements.
 - NyX's Key        : [Discord Server](https://discord.gg/P9gGZaXWGR)
 - Mandrill's Key   : [Discord Server](https://prodia.com/)
 - A Prodia Account : [Click here](https://discord.gg/jTM9NCW49E/)
+
 
 # Installation 
 
