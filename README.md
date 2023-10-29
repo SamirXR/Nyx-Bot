@@ -1,7 +1,13 @@
 # Nyx-Bot
-AI Discord bot with Image Recognition/OCR Capabilities + Image Generation with SDXL
+
+# About Nyx-Bot
+Aritifical Intelligence Discord bot with Image Recognition/OCR Capabilities + Image Generation with SDXL
 
 Join [Discord Server](https://discord.gg/P9gGZaXWGR) for any Assist/Issues 
+
+If You like My OpenSource Work you can Support : https://www.buymeacoffee.com/samir.xr
+
+This will be Solely used for Hosting of Bot/API and Future Improvements.
 
 # Prerequisites
 
