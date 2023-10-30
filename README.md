@@ -16,7 +16,8 @@ This will be Solely used for Hosting of Bot/API and Future Improvements.
 | Feature                  | Description                             |
 |--------------------------|-----------------------------------------|
 | Chat                     | Uses GPT-3 for natural language understanding and generation. |
-| Image Classification                    | Uses  LLaVA for Classification |
+| Image Classification                    | Uses  LLaVA for Classification. |
+| Image Generation                  | Uses  SDXL for Generation. |
 | OCR (Optical Character Recognition) | Allows you to extract text from images and scanned documents. |
 | YouTube Summarization    | Summarizes YouTube videos to provide concise overviews. |
 | Internet Search    | Utilizes DuckDuckGO as a search engine for the content.  |
