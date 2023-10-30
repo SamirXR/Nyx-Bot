@@ -128,9 +128,9 @@ def generate_image_description(url):
 
 @bot.event
 async def on_message(message):
-    if message.author == bot.user or message.author.bot or not active:
+    global active
+    if not active or message.author == bot.user or message.author.bot:
         return
-
     if message.author.id in processing_users:
         return
     processing_users.add(message.author.id)
@@ -138,8 +138,45 @@ async def on_message(message):
     if key not in message_history:
         message_history[key] = []
 
+    # Check if the message starts with "search "
+    if message.content.startswith('search'):
+        search_query = message.content[7:]  # Get the text after "search "
+        if not search_query:
+            await message.reply("Please specify what you want to search for.")
+            processing_users.remove(message.author.id)
+            return
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f'https://ddg-api.awam.repl.co/api/search?query={search_query}') as response:
+                search_data = await response.json()
+        search_info = ' '.join([f"Title: {result['Title']}, Link: {result['Link']}, Snippet: {result['Snippet']}" for result in search_data])
+        message_history[key].append({"role": "user", "content": search_info})
+
+    # Check if the message contains a YouTube link
+    elif "youtube.com" in message.content or "youtu.be" in message.content:
+        await message.channel.trigger_typing()
+        url = 'https://www.summarize.tech/api/summary'
+        headers = {}
+        data = {
+            'url': message.content,  # Use the message content as the URL
+            'deviceId': 'NyX',
+            'idToken': None,
+        }
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, headers=headers, json=data) as response:
+                if response.status == 200:
+                    print("Request successful")
+                    summary = await response.json()
+                    print(summary)
+                    # Extract the title and summary
+                    title = summary['title']
+                    summary_text = summary['rollups']['0']['summary']
+                    # Add the title and summary to the message history
+                    message_history[key].append({"role": "user", "content": f"Title: {title}\n\n{summary_text}"})
+                else:
+                    print(f"Request failed with status code {response.status}")
+
     # Check if the message has an attachment
-    if message.attachments:
+    elif message.attachments:
         attachment = message.attachments[0]
         # Check the size of the attachment
         if attachment.size > 1024 * 1024:  # more than 1024 KB
@@ -189,7 +226,6 @@ async def on_message(message):
     for chunk in response_chunks:
         await message.reply(chunk, allowed_mentions=discord.AllowedMentions.none())
         await asyncio.sleep(0.3)
-
 
 
 nsfw_words = ["dildo","pussy","cumshot","whore","dick","pussy","boobs","clit","vagina","asshole","breast","doggy","anus","cunt","gangbang","raped","rape","cumshot","handjob","gape","balls","clunge","shit","piss","fany","missionary","spooning","xxx","naked", "cock","naked","penis","hentai","boobies"]
