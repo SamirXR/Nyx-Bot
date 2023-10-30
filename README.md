@@ -28,8 +28,8 @@ This will be Solely used for Hosting of Bot/API and Future Improvements.
 - A Discord Token  : [Click here](https://discord.com/developers/applications/)
 - OCR Key          : [Click here](https://ocr.space/ocrapi/)
 - NyX's Key        : [Discord Server](https://discord.gg/P9gGZaXWGR)
-- Mandrill's Key   : [Discord Server](https://prodia.com/)
-- A Prodia Account : [Click here](https://discord.gg/jTM9NCW49E/)
+- Mandrill's Key   : [Discord Server](hhttps://discord.gg/jTM9NCW49E/)
+- A Prodia Account : [Click here](https://prodia.com/)
 
 
 # Installation 
