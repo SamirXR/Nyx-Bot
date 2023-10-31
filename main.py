@@ -370,6 +370,105 @@ async def imagine_sdxl(ctx, model: str, prompt: str, style: str,
                           color=discord.Color.green())
     await msg.edit_original_response(content="Here is your image:",
                                      embed=embed)
+api_url = "https://665.uncovernet.workers.dev/translate"
+language_map = {
+  'en': 'English',
+  'es': 'Spanish',
+  'fr': 'French',
+  'de': 'German',
+  'ja': 'Japanese',
+  'ru': 'Russian',
+  'ar': 'Arabic',
+  'pt': 'Portuguese',
+  'it': 'Italian',
+  'nl': 'Dutch',
+  'ko': 'Korean',
+  'tr': 'Turkish',
+  'sv': 'Swedish',
+  'hi': 'Hindi',
+  'pl': 'Polish',
+  'vi': 'Vietnamese',
+  'el': 'Greek',
+  'fi': 'Finnish',
+  'zh': 'Chinese'
+}
+
+@bot.slash_command(name="translate", description="Translate text from one language to another")
+@option('prompt', description="Enter text to translate", required=True)
+@option('translate_from', description="Source language", choices=language_map.values(), required=True)
+@option('translate_to', description="Target language", choices=language_map.values(), required=True)
+async def translate(ctx, prompt: str, translate_from: str, translate_to: str):
+  # Reverse the map to get language codes from names
+  reverse_map = {v: k for k, v in language_map.items()}
+  params = {
+      'text': prompt,
+      'source_lang': reverse_map[translate_from],
+      'target_lang': reverse_map[translate_to]
+  }
+  # Send an initial response
+  await ctx.respond("Translating...")
+  async with aiohttp.ClientSession() as session:
+      async with session.get(api_url, params=params) as response:
+          if response.status == 200:
+              data = await response.json()
+              # Edit the initial response with the translation
+              await ctx.edit(content=f"Translation: {data['response']['translated_text']}")
+          else:
+              await ctx.edit_response(content="Error: Unable to translate text.")
+
+base_url = "https://api.prodia.com/v1"
+headers = {
+    "accept": "application/json",
+    "content-type": "application/json",
+    "X-Prodia-Key": os.environ['PRODIA_KEY']
+}
+
+scale_map = {
+    '2X': 2,
+    '4X': 4
+}
+
+@bot.slash_command(name="upscale", description="Upscale an image by 2x or 4x")
+@option('scale', description="Upscale factor", choices=scale_map.keys(), required=True)
+@option('init_image', description="Image to upscale", type=discord.Attachment, required=True)
+async def upscale(ctx, init_image: discord.Attachment, scale: str):
+    image_url = init_image.url
+    scale_factor = scale_map[scale]  # Get the corresponding value from the map
+
+    submit_url = f"{base_url}/upscale"
+    submit_payload = {
+        "resize": scale_factor,
+        "imageUrl": image_url
+    }
+
+    # Send initial response
+    await ctx.respond("Upscaling...")
+
+    async with aiohttp.ClientSession() as session:
+        async with session.post(submit_url, json=submit_payload, headers=headers) as response:
+            if response.status == 200:
+                job_data = await response.json()
+                job_id = job_data["job"]
+
+                while job_data["status"] != "succeeded" or not job_data.get("imageUrl"):
+                    await asyncio.sleep(5)  # Wait for 5 seconds before checking again
+                    async with session.get(f"{base_url}/job/{job_id}", headers=headers) as result_response:
+                        job_data = await result_response.json()
+
+                if job_data.get("imageUrl") and job_data["status"] == "succeeded":
+                    # Download the image
+                    async with session.get(job_data['imageUrl']) as image_response:
+                        image_data = await image_response.read()
+
+                    # Create a BytesIO object and save the image data to it
+                    image_io = BytesIO(image_data)
+
+                    # Create a File object and send it
+                    await ctx.send(file=discord.File(fp=image_io, filename='upscaled_image.png'))
+                else:
+                    await ctx.send(content="Upscale is not successful or no image URL provided.")
+            else:
+                await ctx.send(content="Error: Unable to Upscale Image")
 
 
 keep_alive.keep_alive()
