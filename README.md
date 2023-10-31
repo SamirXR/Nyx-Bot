@@ -21,6 +21,8 @@ This will be Solely used for Hosting of Bot/API and Future Improvements.
 | OCR (Optical Character Recognition) | Allows you to extract text from images and scanned documents. |
 | YouTube Summarization    | Summarizes YouTube videos to provide concise overviews. |
 | Internet Search    | Utilizes DuckDuckGO as a search engine for the content.  |
+| Upscale/Image Enhancement    | Utilizes Prodia for Upscaling Images.  |
+| Translation (19 Languages)   | Utilizes [TAS](https://github.com/Uncover-F/TAS) For Translation.  |
 
 # Prerequisites
 
