@@ -23,6 +23,8 @@ This will be Solely used for Hosting of Bot/API and Future Improvements.
 | Internet Search    | Utilizes DuckDuckGO as a search engine for the content.  |
 | Upscale/Image Enhancement    | Utilizes Prodia for Upscaling Images.  |
 | Translation (19 Languages)   | Utilizes [TAS](https://github.com/Uncover-F/TAS) For Translation.  |
+| Anime Image Search  | Utilizes [Anime-Pictures](https://anime-pictures.net) For Fetching Image.  |
+
 
 # Prerequisites
 
