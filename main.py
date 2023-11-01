@@ -20,6 +20,7 @@ from datetime import datetime, timedelta
 import base64
 import datetime
 from io import BytesIO
+from bs4 import BeautifulSoup
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -469,6 +470,47 @@ async def upscale(ctx, init_image: discord.Attachment, scale: str):
                     await ctx.send(content="Upscale is not successful or no image URL provided.")
             else:
                 await ctx.send(content="Error: Unable to Upscale Image")
+
+@bot.slash_command(name="anime_images", description="Get random anime images")
+@option('prompt', description="Search prompt", type=str, required=True)
+@option('image_numbers', description="Number of images", type=int, required=True, choices=[1, 2, 3, 4])
+async def anime_images(ctx, prompt: str, image_numbers: int):
+    query = prompt.replace(" ", "+")  # Replace spaces with '+' for the URL
+    url = f"https://anime-pictures.net/posts?page=0&search_tag={query}&order_by=date&ldate=0&lang=en"
+
+    # Send initial response
+    await ctx.respond("Searching for images...")
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            soup = BeautifulSoup(await response.text(), "html.parser")
+
+    body_wrapper = soup.find("div", {"id": "body_wrapper"})
+    image_tags = body_wrapper.find_all("img")
+
+    image_urls = [img["src"].replace("cp", "bp") for img in image_tags]
+
+    # Limit the number of image URLs to 40
+    image_urls = image_urls[:40]
+
+    # Ensure you have at least 4 images to select from
+    if len(image_urls) >= image_numbers:
+        # Randomly select image URLs
+        selected_image_urls = random.sample(image_urls, image_numbers)
+    else:
+        await ctx.send(content="Error: No images found")
+        return
+
+    async with aiohttp.ClientSession() as session:
+        for img_url in selected_image_urls:
+            async with session.get(f"https:{img_url}") as image_response:
+                image_data = await image_response.read()
+
+            # Create a BytesIO object and save the image data to it
+            image_io = BytesIO(image_data)
+
+            # Create a File object and send it
+            await ctx.send(file=discord.File(fp=image_io, filename='anime_image.png'))
 
 
 keep_alive.keep_alive()
