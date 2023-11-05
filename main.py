@@ -512,6 +512,77 @@ async def anime_images(ctx, prompt: str, image_numbers: int):
             # Create a File object and send it
             await ctx.send(file=discord.File(fp=image_io, filename='anime_image.png'))
 
+voices = [
+    {"voice_id": "21m00Tcm4TlvDq8ikWAM", "name": "Rachel"},
+    {"voice_id": "2EiwWnXFnvU5JabPnv8n", "name": "Clyde"},
+    {"voice_id": "AZnzlk1XvdvUeBnXmlld", "name": "Domi"},
+    {"voice_id": "CYw3kZ02Hs0563khs1Fj", "name": "Dave"},
+    {"voice_id": "D38z5RcWu1voky8WS1ja", "name": "Fin"},
+    {"voice_id": "EXAVITQu4vr4xnSDxMaL", "name": "Bella"},
+    {"voice_id": "GBv7mTt0atIp3Br8iCZE", "name": "Thomas"},
+    {"voice_id": "MF3mGyEYCl7XYWbV9V6O", "name": "Elli"},
+    {"voice_id": "SOYHLrjzK2X1ezoPC6cr", "name": "Harry"},
+    {"voice_id": "TX3LPaxmHKxFdv7VOQHJ", "name": "Liam"},
+    {"voice_id": "ThT5KcBeYPX3keUQqHPh", "name": "Dorothy"},
+    {"voice_id": "XB0fDUnXU5powFXDhCwa", "name": "Charlotte"},
+    {"voice_id": "XrExE9yKIg1WjnnlVkGX", "name": "Matilda"},
+    {"voice_id": "bVMeCyTHy58xNoL34h3p", "name": "Jeremy"},
+    {"voice_id": "flq6f7yk4E4fJM5XTYuZ", "name": "Michael"},
+    {"voice_id": "jBpfuIE2acCO8z3wKNLl", "name": "Gigi"},
+    {"voice_id": "jsCqWAovK2LkecY7zXl4", "name": "Freya"},
+    {"voice_id": "oWAxZDx7w5VEj9dCyTzz", "name": "Grace"},
+    {"voice_id": "onwK4e9ZLuTAKqWW03F9", "name": "Daniel"},
+    {"voice_id": "pMsXgVXv3BLzUgSXRplE", "name": "Serena"},
+    {"voice_id": "pNInz6obpgDQGcFmaJgB", "name": "Adam"},
+    {"voice_id": "piTKgcLEGmPE4e6mEKli", "name": "Nicole"},
+    {"voice_id": "t0jbNlBVZ17f02VDIeMI", "name": "Jessie"},
+    {"voice_id": "wViXBPUzp2ZZixB1xQuM", "name": "Ryan"},
+    {"voice_id": "z9fAnlkpzviPz146aGWa", "name": "Glinda"},
+]
+
+async def text_to_speech(input_text, voice_id):
+    url = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}"
+    headers = {
+        'accept': 'audio/mpeg',
+        'content-type': 'application/json',
+    }
+    data = {'text': input_text}
+
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, headers=headers, json=data) as resp:
+            if resp.status == 200:
+                return await resp.read()
+            else:
+                print(f"Error: {resp.status}")
+                return None
+
+def voice_id_for_name(name):
+    for voice in voices:
+        if voice['name'] == name:
+            return voice['voice_id']
+    return None 
+
+@bot.slash_command(
+    name="text2speech",
+    description="Convert your text to speech with your selected voice"
+)
+@option('text', description="Text to Convert to Speech", required=True)
+@option('voice', description="Choose a Voice", choices=[voice['name'] for voice in voices], required=True)
+async def text2speech(ctx, text: str, voice: str):
+    await ctx.defer()  # acknowledge the command while processing the TTS
+    await ctx.edit(content="Generating TTS...")
+
+    voice_id = voice_id_for_name(voice)
+    if not voice_id:
+        await ctx.respond("Error: Invalid voice selection.")
+        return
+
+    audio_data = await text_to_speech(text, voice_id)
+    if audio_data:
+        with BytesIO(audio_data) as audio_file:
+            await ctx.respond(file=discord.File(fp=audio_file, filename='NyX.mp3'))
+    else:
+        await ctx.respond("Error while generating speech from text.")
 
 keep_alive.keep_alive()
 bot.run(os.environ['DISCORD_TOKEN'])
