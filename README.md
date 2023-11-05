@@ -24,6 +24,7 @@ This will be Solely used for Hosting of Bot/API and Future Improvements.
 | Upscale/Image Enhancement    | Utilizes Prodia for Upscaling Images.  |
 | Translation (19 Languages)   | Utilizes [TAS](https://github.com/Uncover-F/TAS) For Translation.  |
 | Anime Image Search  | Utilizes [Anime-Pictures](https://anime-pictures.net) For Fetching Image.  |
+| Text to Speech (25 Voices)  | Utilizes [Eleven Labs](https://elevenlabs.io/) For Speech.  |
 
 
 # Prerequisites
