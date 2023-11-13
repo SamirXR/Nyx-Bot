@@ -4,3 +4,4 @@ prodiapy==3.6
 aiohttp
 sdxl
 py-cord
+flask
