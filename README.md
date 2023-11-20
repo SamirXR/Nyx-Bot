@@ -54,7 +54,7 @@ cd Nyx-Bot
 3. Make Your Secret Token/APIs on Replit's Secret.
    
 ```python
- DISCORD
+ DISCORD_TOKEN
  NYX_KEY
  PRODIA_KEY
  OCR_KEY
