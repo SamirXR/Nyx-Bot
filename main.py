@@ -51,7 +51,7 @@ async def generate_response(messages):
     for message in messages:
         base += f"{message['role']}: {message['content']}\n"
 
-    url = 'https://nyx-api.samirawm7.repl.co/openai/chat/completions'
+    url = 'https://nyx-bqfx.onrender.com/openai/chat/completions'
     headers = {
     'Content-Type': 'application/json',
     'Authorization': f'Bearer {nyx_api_key}'
