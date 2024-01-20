@@ -20,7 +20,6 @@ This will be Solely used for Hosting of Bot/API and Future Improvements.
 | Image Generation                  | Uses  SDXL for Generation. |
 | OCR (Optical Character Recognition) | Allows you to extract text from images and scanned documents. |
 | YouTube Summarization    | Summarizes YouTube videos to provide concise overviews. |
-| Internet Search    | Utilizes DuckDuckGO as a search engine for the content.  |
 | Upscale/Image Enhancement    | Utilizes Prodia for Upscaling Images.  |
 | Translation (19 Languages)   | Utilizes [TAS](https://github.com/Uncover-F/TAS) For Translation.  |
 | Anime Image Search  | Utilizes [Anime-Pictures](https://anime-pictures.net) For Fetching Image.  |
@@ -33,7 +32,6 @@ This will be Solely used for Hosting of Bot/API and Future Improvements.
 - A Discord Token  : [Click here](https://discord.com/developers/applications/)
 - OCR Key          : [Click here](https://ocr.space/ocrapi/)
 - NyX's Key        : [Discord Server](https://discord.gg/P9gGZaXWGR)
-- Mandrill's Key   : [Discord Server](https://discord.gg/jTM9NCW49E/)
 - A Prodia Account : [Click here](https://prodia.com/)
 
 
