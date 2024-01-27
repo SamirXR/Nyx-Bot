@@ -31,8 +31,6 @@ active = False
 
 nyx_api_key = os.environ['NYX_KEY']
 ocr_key= os.environ['OCR_KEY']
-openai.api_key = os.environ['MANDRILL_KEY']
-openai.api_base = "https://api.mandrillai.tech/v1"
 generator = prodia.AsyncClient(api_key=os.environ['PRODIA_KEY'])
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="xr7.", intents=intents)
