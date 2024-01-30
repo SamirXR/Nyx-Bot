@@ -56,7 +56,6 @@ cd Nyx-Bot
  NYX_KEY
  PRODIA_KEY
  OCR_KEY
- MANDRILL_KEY
 ```
 
 4. Install the Requirements
