@@ -3,22 +3,12 @@ from discord.ext import commands
 import aiohttp
 import json
 import asyncio
-import os
 import openai
 import keep_alive
 import os
-import keep_alive
-import discord
-import os
-from discord.ext import commands
-from discord import option
-import keep_alive
 import prodia
 import random
 import requests
-from datetime import datetime, timedelta
-import base64
-import datetime
 from io import BytesIO
 from bs4 import BeautifulSoup
 
