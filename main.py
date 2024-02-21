@@ -352,7 +352,7 @@ async def imagine_sdxl(ctx, model: str, prompt: str, style: str,
                           color=discord.Color.green())
     await msg.edit_original_response(content="Here is your image:",
                                      embed=embed)
-api_url = "https://665.uncovernet.workers.dev/translate"
+api_url = "https://655.mtis.workers.dev/translate"
 language_map = {
   'en': 'English',
   'es': 'Spanish',
